@@ -19,7 +19,7 @@
         </view>
         <!-- 歌手列表 -->
         <view class="theme-card text-sm pt-52">
-            <view v-if="scrollH === 0 || list.length <= 0">
+            <view v-if="scrollH === 0 || artistData.length <= 0">
                 <view class="grid grid-cols-2 gap-4 py-2">
                     <!-- skeleton -->
                     <view v-for="item in 4" :key="item">
@@ -50,7 +50,7 @@
                                 <view class="my-2 w-32 text-center truncate">{{ item.name }}</view>
                             </view>
                         </view>
-                        <view v-for="item in list" :key="item.id" class="truncate theme-card" @click="gotoArtistDetailPage(item.id)">
+                        <view v-for="item in artistData" :key="item.id" class="truncate theme-card" @click="gotoArtistDetailPage(item.id)">
                         {{ item.name }}
                         </view>
                     </view>
@@ -68,7 +68,6 @@ import { artist } from '@/config/api/artist';
 import type { Artist } from '@/config/models/artist';
 import CoverItem from '@/components/CoverItem.vue';
 import Player from "@/components/Player.vue";
-import useList from '@/config/utils/useList';   // 列表加载Hooks
 import { getScrollHeight, scrollHeight } from '@/config/utils/getScrollH';
 import { onReady } from '@dcloudio/uni-app';
 
@@ -96,9 +95,9 @@ const pageData = reactive<PageData>({
 
 const scrollH = ref<number>(0) // scroll组件高度
 
-// const artistData = ref<Artist[]>([])
+const artistData = ref<Artist[]>([])
 const topArtist = computed(() => {
-    return list.value.splice(0, 4)
+    return artistData.value.splice(0, 4)
 })
 
 const changeOptions = (name: string, value: number | string) => {
@@ -139,16 +138,38 @@ const gotoArtistDetailPage = (id: number) => {
     })
 }
 
-const getArtistData = async() => {
-    try{
-        const { artists, more } = await artist.getArtistList(pageData);
-        return { artists, more }
-    }catch(e){
-        console.log(e)
+const getData = async() => {
+    if (pageData.more === false) {
+        uni.showToast({
+            icon: "none",
+            title: "没有更多了"
+	    })
+        return
+    }else if(pageData.loading === true && artistData.value) {
+        uni.showToast({
+            icon: "none",
+            title: "请勿频繁触发加载"
+	    })
+        return
+    }else{
+        pageData.loading = true;
+        try {
+            const { artists, more } = await artist.getArtistList(pageData);
+            if (pageData.page === 1) {
+                artistData.value = artists;
+            } else {
+                artistData.value.push(...artists);
+            }
+            pageData.init = true;
+            pageData.loading = false;
+            pageData.more = more;
+        } catch (e) {
+            console.log(e);
+        }
     }
 }
 
-const { list, getData } = useList(getArtistData, 'artists', pageData)
+getData()
 
 onReady(() => {
     // #ifdef MP-WEIXIN

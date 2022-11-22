@@ -53,7 +53,7 @@ const useList = (listReq: Function, listStr: string, pageData: PageData, data?:O
             listReq(params).then((res:any) => {
                 const lasttime = res.lasttime
                 const more = res.more
-                if (pageData.before! <= 0 || pageData.page! === 1) {
+                if (pageData.before! <= 0) {
                     list.value = res[listStr];
                 } else {
                     list.value.push(...res[listStr]);
@@ -62,7 +62,7 @@ const useList = (listReq: Function, listStr: string, pageData: PageData, data?:O
                 pageData.loading = false;
                 pageData.before = lasttime;
                 pageData.more = more;
-                // console.log(list.value)
+                console.log(list.value)
             })
         }
     }

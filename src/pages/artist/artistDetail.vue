@@ -66,7 +66,7 @@
 
 <script setup lang="ts">
 import { onLoad } from '@dcloudio/uni-app';
-import { ref, unref, reactive, computed, nextTick, watchEffect } from 'vue';
+import { ref, unref, reactive, computed, nextTick } from 'vue';
 import { artist } from '@/config/api/artist';
 import type { ArtistDetailArtist, Album } from '@/config/models/artist';
 import type { Song } from '@/config/models/song';
@@ -76,7 +76,6 @@ import PlayList from '@/components/PlayList.vue';
 import { getScrollHeight, scrollHeight } from '@/config/utils/getScrollH';
 import { onReady } from '@dcloudio/uni-app';
 import Player from "@/components/Player.vue";
-import useList from '@/config/utils/useList';   // 列表加载Hooks
 
 interface PageData {
     init: boolean,
@@ -113,7 +112,7 @@ const backTop = () => { // 回到顶部
 
 const onReachBottom = () => {   // 触底加载
     pageData.page++;
-    getDetailData()
+    getData()
 }
 
 const gotoPlayListDetailPage = (id: number) => {
@@ -130,7 +129,7 @@ const selectTab = ref<string>('song');
 
 const tabChange = (tab: string) => {
     selectTab.value = tab
-    getDetailData()
+    getData()
 }
 
 const songList = ref<Song[]>([]);
@@ -140,36 +139,49 @@ const offset = computed(() => {
     return (pageData.page - 1) * pageData.limit
 })
 
-const getDetailData = async () => {
+const getData = async () => {
     if (!artistDetail.value) {
         artistDetail.value = await artist.getArtistDetail(id.value!)
     }
     if (selectTab.value === 'song' && songList.value.length <= 0) {
+        // console.log('song')
         songList.value = await artist.getArtistHotSongs(id.value!)
     } else if (selectTab.value === 'album') {
-        const { list } = useList(getAlbumData, 'hotAlbums', pageData, {offset: offset.value, id: id.value})
-        watchEffect(() => { // 通过watchEffect监听并更新
-            albumList.value = list.value
-        })
-    }
-}
-
-const getAlbumData = async(params:any) => {
-    try{
-        const { hotAlbums, more } = await artist.getArtistAlbum(
-            params.id,
-            pageData.limit,
-            params.offset
-        )
-        return { hotAlbums, more }
-    }catch(e){
-        console.log(e)
+        // console.log('album')
+        if (pageData.more === false) {
+            uni.showToast({
+                icon: "none",
+                title: "没有更多了"
+            })
+            return
+        } else if (pageData.loading === true && artistDetail.value) {
+            uni.showToast({
+                icon: "none",
+                title: "请勿频繁触发加载"
+            })
+            return
+        } else {
+            pageData.loading = true;
+            const { hotAlbums, more } = await artist.getArtistAlbum(
+                id.value as number,
+                pageData.limit,
+                offset.value
+            )
+            if (pageData.page === 1) {
+                albumList.value = hotAlbums;
+            } else {
+                albumList.value.push(...hotAlbums);
+            }
+            pageData.init = true;
+            pageData.loading = false;
+            pageData.more = more;
+        }
     }
 }
 
 onLoad((options) => {
     id.value = Number(options.id as any)
-    getDetailData()
+    getData()
 })
 
 onReady(() => {

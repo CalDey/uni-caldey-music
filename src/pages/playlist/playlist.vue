@@ -68,6 +68,21 @@ const pageData = reactive<PageData>({   // 分页数据
     tag: '全部',
 })
 
+const getPlayListData = async() => {    // 获取歌单数据
+    try {
+        const { playlists, lasttime, more } = await playlist.getTopPlaylistHighquality({
+            limit: pageData.limit,
+            before: pageData.before,
+            cat: pageData.tag,
+        })
+        return { playlists, lasttime, more }
+    }catch(e){
+        console.log(e)
+    }
+}
+
+const { list, getData } = useList(getPlayListData, 'playlists', pageData)
+
 const tagChange = (tagName: string) => {   // tag切换改变数据
     pageData.tag = tagName;
     pageData.before = 0;
@@ -102,21 +117,6 @@ const getPlayListTags = async () => {
 }
 
 getPlayListTags()
-
-const getPlayListData = async() => {    // 获取歌单数据
-    try {
-        const { playlists, lasttime, more } = await playlist.getTopPlaylistHighquality({
-            limit: pageData.limit,
-            before: pageData.before,
-            cat: pageData.tag,
-        })
-        return { playlists, lasttime, more }
-    }catch(e){
-        console.log(e)
-    }
-}
-
-const { list, getData } = useList(getPlayListData, 'playlists', pageData)
 
 onReady(() => {
     // #ifdef MP-WEIXIN
