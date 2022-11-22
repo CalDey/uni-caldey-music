@@ -1,0 +1,33 @@
+body {
+    font-family: poppin, Tahoma, Arial, \5FAE\8F6F\96C5\9ED1, sans-serif;
+}
+
+ul {
+    list-style-type:none;
+    @apply p-0;
+}
+
+.safe-container {
+	@apply m-2;
+}
+
+.text-ellipsis {
+    white-space: pre-line;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+}
+
+.theme-card {
+    @apply bg-slate-50 shadow-lg p-2
+}
+
+.theme-card-text {
+    @apply text-lg font-bold
+}
+
+.fix-scroll {   // fixed布局 scroll-view 滚动修正
+    width: 100%;
+	overflow-x: auto;
+}

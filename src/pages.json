@@ -1,0 +1,81 @@
+{
+	"pages": [
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "Caldey Music🎵"
+			}
+		},
+		{
+			"path": "pages/playlist/playlist",
+			"style": {
+				"navigationBarTitleText": "Caldey Music🎵",
+				"onReachBottomDistance": 100
+			}
+		},
+		{
+			"path": "pages/playlist/playlistDetail",
+			"style": {
+				"navigationBarTitleText": "Caldey Music🎵"
+			}
+		},
+		{
+			"path": "pages/artist/artist",
+			"style": {
+				"navigationBarTitleText": "Caldey Music🎵",
+				"onReachBottomDistance": 100
+			}
+		},
+		{
+			"path": "pages/artist/artistDetail",
+			"style": {
+				"navigationBarTitleText": "Caldey Music🎵",
+				"onReachBottomDistance": 100
+			}
+		},
+		{
+			"path": "pages/song/song",
+			"style": {
+				"navigationBarTitleText": "Caldey Music🎵"
+			}
+		},
+		{
+			"path": "pages/search/search",
+			"style": {
+				"navigationBarTitleText": "Caldey Music🎵",
+				"onReachBottomDistance": 100
+			}
+		}
+	],
+	"tabBar": {
+		"color": "#62666C",
+		"selectedColor": "#93C5FD",
+		"backgroundColor": "#FFFFFF",
+		"list": [
+			{
+				"pagePath": "pages/index/index",
+				"text": "首页",
+				"iconPath": "static/icon/home.png",
+				"selectedIconPath": "static/icon/home_active.png"
+			},
+			{
+				"pagePath": "pages/playlist/playlist",
+				"text": "歌单",
+				"iconPath": "static/icon/playlist.png",
+				"selectedIconPath": "static/icon/playlist_active.png"
+			},
+			{
+				"pagePath": "pages/artist/artist",
+				"text": "歌手",
+				"iconPath": "static/icon/artist.png",
+				"selectedIconPath": "static/icon/artist_active.png"
+			}
+		]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "uni-app",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+	}
+}
