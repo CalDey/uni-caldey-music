@@ -19,7 +19,7 @@
         </view>
         <!-- 歌手列表 -->
         <view class="theme-card text-sm pt-52">
-            <view v-if="scrollH === 0 || artistData.length <= 0">
+            <view v-if="scrollH === 0 || list.length <= 0">
                 <view class="grid grid-cols-2 gap-4 py-2">
                     <!-- skeleton -->
                     <view v-for="item in 4" :key="item">
@@ -50,7 +50,7 @@
                                 <view class="my-2 w-32 text-center truncate">{{ item.name }}</view>
                             </view>
                         </view>
-                        <view v-for="item in artistData" :key="item.id" class="truncate theme-card" @click="gotoArtistDetailPage(item.id)">
+                        <view v-for="item in list" :key="item.id" class="truncate theme-card" @click="gotoArtistDetailPage(item.id)">
                         {{ item.name }}
                         </view>
                     </view>
@@ -68,9 +68,9 @@ import { artist } from '@/config/api/artist';
 import type { Artist } from '@/config/models/artist';
 import CoverItem from '@/components/CoverItem.vue';
 import Player from "@/components/Player.vue";
+import useList from '@/config/utils/useList';   // 列表加载Hooks
 import { getScrollHeight, scrollHeight } from '@/config/utils/getScrollH';
 import { onReady } from '@dcloudio/uni-app';
-
 interface PageData {
     init: boolean,
     loading: boolean,
@@ -81,7 +81,6 @@ interface PageData {
     type: number,
     area: number,
 }
-
 const pageData = reactive<PageData>({
     init: false,
     loading: false,
@@ -92,14 +91,11 @@ const pageData = reactive<PageData>({
     type: -1,
     area: -1,
 });
-
 const scrollH = ref<number>(0) // scroll组件高度
-
-const artistData = ref<Artist[]>([])
+// const artistData = ref<Artist[]>([])
 const topArtist = computed(() => {
-    return artistData.value.splice(0, 4)
+    return list.value.splice(0, 4)
 })
-
 const changeOptions = (name: string, value: number | string) => {
     pageData.page = 1;
     if (name === 'type') pageData.type = value as number;
@@ -108,69 +104,39 @@ const changeOptions = (name: string, value: number | string) => {
     getData();
     backTop();
 }
-
 const scrollTop = ref<number>(0)
 const old = reactive<any>({
     scrollTop: 0
 })
-
 const scroll = (e:any) => { // scroll-y滚动位置记录
     old.scrollTop = e.detail.scrollTop
 }
-
 const backTop = () => { // 回到顶部
     scrollTop.value = old.scrollTop
     nextTick(() => {
         scrollTop.value = 0
     })
 }
-
 const onReachBottom = () => {   // 触底加载
     // console.log('到底了')
     pageData.page++;
     getData()
 }
-
 const gotoArtistDetailPage = (id: number) => {
     // console.log('跳转')
     uni.navigateTo({
         url: 'artistDetail?id=' + id
     })
 }
-
-const getData = async() => {
-    if (pageData.more === false) {
-        uni.showToast({
-            icon: "none",
-            title: "没有更多了"
-	    })
-        return
-    }else if(pageData.loading === true && artistData.value) {
-        uni.showToast({
-            icon: "none",
-            title: "请勿频繁触发加载"
-	    })
-        return
-    }else{
-        pageData.loading = true;
-        try {
-            const { artists, more } = await artist.getArtistList(pageData);
-            if (pageData.page === 1) {
-                artistData.value = artists;
-            } else {
-                artistData.value.push(...artists);
-            }
-            pageData.init = true;
-            pageData.loading = false;
-            pageData.more = more;
-        } catch (e) {
-            console.log(e);
-        }
+const getArtistData = async() => {
+    try{
+        const { artists, more } = await artist.getArtistList(pageData);
+        return { artists, more }
+    }catch(e){
+        console.log(e)
     }
 }
-
-getData()
-
+const { list, getData } = useList(getArtistData, 'artists', pageData)
 onReady(() => {
     // #ifdef MP-WEIXIN
     getScrollHeight(70)    // 微信小程序高度修正 50+20 50为tabBar默认高度

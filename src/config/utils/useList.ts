@@ -8,7 +8,7 @@
 
 import { ref } from 'vue';
 
-const list = ref<any>([]);
+// const list = ref<any>([]);  // 外部声明可以实现全局共享
 
 interface PageData {
     init: boolean,
@@ -24,6 +24,8 @@ interface PageData {
 }
 
 const useList = (listReq: Function, listStr: string, pageData: PageData, data?:Object):any => {
+    const list = ref<any>([]);
+
     if(!listReq) {
         return new Error('请传入接口调用方法!')
     }else if(!listStr){
@@ -53,7 +55,7 @@ const useList = (listReq: Function, listStr: string, pageData: PageData, data?:O
             listReq(params).then((res:any) => {
                 const lasttime = res.lasttime
                 const more = res.more
-                if (pageData.before! <= 0) {
+                if (pageData.before! <= 0 || pageData.page === 1) {
                     list.value = res[listStr];
                 } else {
                     list.value.push(...res[listStr]);
@@ -62,7 +64,7 @@ const useList = (listReq: Function, listStr: string, pageData: PageData, data?:O
                 pageData.loading = false;
                 pageData.before = lasttime;
                 pageData.more = more;
-                console.log(list.value)
+                // console.log(list.value)
             })
         }
     }

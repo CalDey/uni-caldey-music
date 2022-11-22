@@ -66,7 +66,7 @@
 
 <script setup lang="ts">
 import { onLoad } from '@dcloudio/uni-app';
-import { ref, unref, reactive, computed, nextTick } from 'vue';
+import { ref, unref, reactive, computed, nextTick, watchEffect } from 'vue';
 import { artist } from '@/config/api/artist';
 import type { ArtistDetailArtist, Album } from '@/config/models/artist';
 import type { Song } from '@/config/models/song';
@@ -76,7 +76,7 @@ import PlayList from '@/components/PlayList.vue';
 import { getScrollHeight, scrollHeight } from '@/config/utils/getScrollH';
 import { onReady } from '@dcloudio/uni-app';
 import Player from "@/components/Player.vue";
-
+import useList from '@/config/utils/useList';   // 列表加载Hooks
 interface PageData {
     init: boolean,
     loading: boolean,
@@ -84,7 +84,6 @@ interface PageData {
     limit: number,
     page: number,
 }
-
 const pageData = reactive<PageData>({
     init: false,
     loading: false,
@@ -92,106 +91,77 @@ const pageData = reactive<PageData>({
     limit: 10,
     page: 1,
 })
-
 const scrollH = ref<number>(0) // scroll组件高度
 const scrollTop = ref<number>(0)
 const old = reactive<any>({
     scrollTop: 0
 })
-
 const scroll = (event: any) => { // scroll-y滚动位置记录
     old.scrollTop = event.detail.scrollTop
 }
-
 const backTop = () => { // 回到顶部
     scrollTop.value = old.scrollTop
     nextTick(() => {
         scrollTop.value = 0
     })
 }
-
 const onReachBottom = () => {   // 触底加载
     pageData.page++;
-    getData()
+    getDetailData()
 }
-
 const gotoPlayListDetailPage = (id: number) => {
     // console.log('跳转')
     uni.navigateTo({
         url: `../playlist/playlistDetail?id=${id}&type=album`
     })
 }
-
 const id = ref<number>();
 const artistDetail = ref<ArtistDetailArtist>();
-
 const selectTab = ref<string>('song');
-
 const tabChange = (tab: string) => {
     selectTab.value = tab
-    getData()
+    getDetailData()
 }
-
 const songList = ref<Song[]>([]);
 const albumList = ref<Album[]>([]);
-
 const offset = computed(() => {
     return (pageData.page - 1) * pageData.limit
 })
-
-const getData = async () => {
+const getDetailData = async () => {
     if (!artistDetail.value) {
         artistDetail.value = await artist.getArtistDetail(id.value!)
     }
     if (selectTab.value === 'song' && songList.value.length <= 0) {
-        // console.log('song')
         songList.value = await artist.getArtistHotSongs(id.value!)
     } else if (selectTab.value === 'album') {
-        // console.log('album')
-        if (pageData.more === false) {
-            uni.showToast({
-                icon: "none",
-                title: "没有更多了"
-            })
-            return
-        } else if (pageData.loading === true && artistDetail.value) {
-            uni.showToast({
-                icon: "none",
-                title: "请勿频繁触发加载"
-            })
-            return
-        } else {
-            pageData.loading = true;
-            const { hotAlbums, more } = await artist.getArtistAlbum(
-                id.value as number,
-                pageData.limit,
-                offset.value
-            )
-            if (pageData.page === 1) {
-                albumList.value = hotAlbums;
-            } else {
-                albumList.value.push(...hotAlbums);
-            }
-            pageData.init = true;
-            pageData.loading = false;
-            pageData.more = more;
-        }
+        const { list } = useList(getAlbumData, 'hotAlbums', pageData, {offset: offset.value, id: id.value})
+        watchEffect(() => { // 通过watchEffect监听并更新
+            albumList.value.push(...list.value)
+        })
     }
 }
-
+const getAlbumData = async(params:any) => {
+    try{
+        const { hotAlbums, more } = await artist.getArtistAlbum(
+            params.id,
+            pageData.limit,
+            params.offset
+        )
+        return { hotAlbums, more }
+    }catch(e){
+        console.log(e)
+    }
+}
 onLoad((options) => {
     id.value = Number(options.id as any)
-    getData()
+    getDetailData()
 })
-
 onReady(() => {
     getScrollHeight(50)
-    // 微信小程序boundingClientRect存在bug，加了2s延迟
     setTimeout(() => {
         scrollH.value = unref(scrollHeight)
     }, 2000)
 })
-
 </script>
 
 <style lang="scss" scoped>
@@ -199,7 +169,6 @@ onReady(() => {
     // 透明边框占位防止容器撑开
     border-bottom: .2rem solid transparent;
 }
-
 .tab__line_active {
     border-bottom: .2rem solid #93C5FD;
 }
