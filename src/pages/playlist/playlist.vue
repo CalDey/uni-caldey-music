@@ -28,12 +28,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, unref, reactive, nextTick } from 'vue';
+import { ref, reactive, nextTick, watchEffect } from 'vue';
 import { playlist } from '@/config/api/playlist';
 import type { PlaylistHighqualityTag, PlayListDetail } from "@/config/models/playlist";
 import Tag from "@/pages/playlist/components/Tag.vue";
 import PlayList from '@/components/PlayList.vue';
-import { getScrollHeight, scrollHeight } from '@/config/utils/getScrollH';
+import { useScrollHeight } from '@/config/utils/useScrollH';
 import { onReady } from '@dcloudio/uni-app';
 import { throttle } from '@/config/utils/tools';
 import useList from '@/config/utils/useList';   // 列表加载Hooks
@@ -119,14 +119,10 @@ const getPlayListTags = async () => {
 getPlayListTags()
 
 onReady(() => {
-    // #ifdef MP-WEIXIN
-    getScrollHeight(70)    // 微信小程序高度修正 50+20 50为tabBar默认高度
-    // #endif
-    // #ifndef MP-WEIXIN
-    getScrollHeight(20) // H5高度修正 20
-    // #endif
-    setTimeout(() => {
-        scrollH.value = unref(scrollHeight)
-    }, 2000)
+    let scrollHeight:any = 0;
+    scrollHeight = useScrollHeight() // H5高度修正 20
+    watchEffect(() => {
+        scrollH.value = scrollHeight.value
+    })
 })
 </script>

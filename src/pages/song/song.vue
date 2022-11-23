@@ -30,11 +30,11 @@
 </template>
 
 <script setup lang="ts">
-import { ref, toRefs, unref, watch, nextTick } from 'vue'
+import { ref, toRefs, watch, nextTick, watchEffect } from 'vue'
 import { usePlayerStore } from '@/store/player';
 import MusicProgressBar from '@/components/MusicProgressBar.vue';
 import { formatMusicLyrics } from '@/config/utils/lyric2Array'
-import { getScrollHeight, scrollHeight } from '@/config/utils/getScrollH';
+import { useScrollHeight } from '@/config/utils/useScrollH';
 import { onReady } from '@dcloudio/uni-app';
 import Lyric from '@/components/Lyric.vue'
 const { song, id, isPause, togglePlay, forward, backup, next, prev } = toRefs(usePlayerStore());
@@ -64,9 +64,10 @@ getLyric(id.value).then((res) => {
 })
 
 onReady(() => {
-    getScrollHeight(20);
-    setTimeout(() => {
-        scrollH.value = unref(scrollHeight)
-    }, 2000)
+    let scrollHeight:any = 0;
+    scrollHeight = useScrollHeight(20);
+    watchEffect(() => {
+        scrollH.value = scrollHeight.value
+    })
 })
 </script>

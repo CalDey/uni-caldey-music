@@ -52,12 +52,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, unref } from 'vue';
+import { ref, watchEffect } from 'vue';
 import { getHotSearch, getSearchSuggest } from '@/config/api/search';
 import type { Hots, SearchSuggest } from '@/config/models/search';
 import { debounce } from '@/config/utils/tools';
 import { usePlayerStore } from '@/store/player';
-import { getScrollHeight, scrollHeight } from '@/config/utils/getScrollH';
+import { useScrollHeight } from '@/config/utils/useScrollH';
 import { onReady } from '@dcloudio/uni-app';
 import CoverItem from '@/components/CoverItem.vue';
 import Player from "@/components/Player.vue";
@@ -132,10 +132,11 @@ const gotoPage = (type: string, id: number) => {
 }
 
 onReady(() => {
-    getScrollHeight(70)
-    setTimeout(() => {
-        scrollH.value = unref(scrollHeight)
-    }, 2000)
+    let scrollHeight:any = 0;
+    scrollHeight = useScrollHeight(50);
+    watchEffect(() => {
+        scrollH.value = scrollHeight.value
+    })
 })
 </script>
 

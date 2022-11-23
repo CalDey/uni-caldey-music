@@ -62,14 +62,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, unref, reactive, computed, nextTick } from 'vue';
+import { ref, reactive, computed, nextTick, watchEffect } from 'vue';
 import { options } from './artistOptions';
 import { artist } from '@/config/api/artist';
 import type { Artist } from '@/config/models/artist';
 import CoverItem from '@/components/CoverItem.vue';
 import Player from "@/components/Player.vue";
 import useList from '@/config/utils/useList';   // 列表加载Hooks
-import { getScrollHeight, scrollHeight } from '@/config/utils/getScrollH';
+import { useScrollHeight } from '@/config/utils/useScrollH';
 import { onReady } from '@dcloudio/uni-app';
 interface PageData {
     init: boolean,
@@ -138,14 +138,10 @@ const getArtistData = async() => {
 }
 const { list, getData } = useList(getArtistData, 'artists', pageData)
 onReady(() => {
-    // #ifdef MP-WEIXIN
-    getScrollHeight(70)    // 微信小程序高度修正 50+20 50为tabBar默认高度
-    // #endif
-    // #ifndef MP-WEIXIN
-    getScrollHeight(20) // H5高度修正 20
-    // #endif
-    setTimeout(() => {
-        scrollH.value = unref(scrollHeight)
-    }, 2000)
+    let scrollHeight:any = 0;
+    scrollHeight = useScrollHeight()
+    watchEffect(() => {
+        scrollH.value = scrollHeight.value
+    })
 })
 </script>

@@ -66,14 +66,14 @@
 
 <script setup lang="ts">
 import { onLoad } from '@dcloudio/uni-app';
-import { ref, unref, reactive, computed, nextTick, watchEffect } from 'vue';
+import { ref, reactive, computed, nextTick, watchEffect } from 'vue';
 import { artist } from '@/config/api/artist';
 import type { ArtistDetailArtist, Album } from '@/config/models/artist';
 import type { Song } from '@/config/models/song';
 import CoverItem from '@/components/CoverItem.vue';
 import VirtualList from '@/components/VirtualList.vue';
 import PlayList from '@/components/PlayList.vue';
-import { getScrollHeight, scrollHeight } from '@/config/utils/getScrollH';
+import { useScrollHeight } from '@/config/utils/useScrollH';
 import { onReady } from '@dcloudio/uni-app';
 import Player from "@/components/Player.vue";
 import useList from '@/config/utils/useList';   // 列表加载Hooks
@@ -157,10 +157,11 @@ onLoad((options) => {
     getDetailData()
 })
 onReady(() => {
-    getScrollHeight(50)
-    setTimeout(() => {
-        scrollH.value = unref(scrollHeight)
-    }, 2000)
+    let scrollHeight:any = 0;
+    scrollHeight = useScrollHeight()
+    watchEffect(() => {
+        scrollH.value = scrollHeight.value
+    })
 })
 </script>
 

@@ -22,14 +22,14 @@
 
 <script setup lang="ts">
 import { onLoad } from '@dcloudio/uni-app';
-import { ref, unref } from 'vue';
+import { ref, watchEffect } from 'vue';
 import { playlist } from '@/config/api/playlist';
 import type { PlayListDetail } from '@/config/models/playlist';
 import type { Song } from '@/config/models/song';
 import type { Album } from '@/config/models/artist';
 import Info from './components/Info.vue';
 import VirtualList from '@/components/VirtualList.vue';
-import { getScrollHeight, scrollHeight } from '@/config/utils/getScrollH';
+import { useScrollHeight } from '@/config/utils/useScrollH';
 import { onReady } from '@dcloudio/uni-app';
 import Player from "@/components/Player.vue";
 
@@ -66,10 +66,11 @@ const handleplayAll = () => {
 }
 
 onReady(() => {
-    getScrollHeight(0)  // 20
-    setTimeout(() => {
-        scrollH.value = unref(scrollHeight)
-    }, 2000)
+    let scrollHeight:any = 0;
+    scrollHeight = useScrollHeight()
+    watchEffect(() => {
+        scrollH.value = scrollHeight.value
+    })
 })
 
 </script>
