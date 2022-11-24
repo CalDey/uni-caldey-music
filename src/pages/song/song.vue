@@ -30,7 +30,8 @@
 </template>
 
 <script setup lang="ts">
-import { ref, toRefs, watch, nextTick, watchEffect } from 'vue'
+import { ref, toRefs, watch, nextTick, watchEffect } from 'vue';
+import type { Ref } from 'vue';
 import { usePlayerStore } from '@/store/player';
 import MusicProgressBar from '@/components/MusicProgressBar.vue';
 import { formatMusicLyrics } from '@/config/utils/lyric2Array'
@@ -64,7 +65,7 @@ getLyric(id.value).then((res) => {
 })
 
 onReady(() => {
-    let scrollHeight:any = 0;
+    let scrollHeight:Ref<number>;
     scrollHeight = useScrollHeight(20);
     watchEffect(() => {
         scrollH.value = scrollHeight.value

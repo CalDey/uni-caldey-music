@@ -53,6 +53,7 @@
 
 <script setup lang="ts">
 import { ref, watchEffect } from 'vue';
+import type { Ref } from 'vue';
 import { getHotSearch, getSearchSuggest } from '@/config/api/search';
 import type { Hots, SearchSuggest } from '@/config/models/search';
 import { debounce } from '@/config/utils/tools';
@@ -132,7 +133,7 @@ const gotoPage = (type: string, id: number) => {
 }
 
 onReady(() => {
-    let scrollHeight:any = 0;
+    let scrollHeight:Ref<number>;
     scrollHeight = useScrollHeight(50);
     watchEffect(() => {
         scrollH.value = scrollHeight.value

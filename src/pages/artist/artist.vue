@@ -46,7 +46,7 @@
                         <view v-for="item in topArtist" :key="item.id" @click="gotoArtistDetailPage(item.id)">
                             <view class="flex flex-col items-center theme-card">
                                 <view v-if="pageData.loading" class="animate-pulse bg-gray-200 rounded-full w-32 h-32"></view>
-                                <CoverItem v-else :imgUrl="item.img1v1Url" :size=32 :limit-size=120 circle />
+                                <CoverItem v-else :imgUrl="item.img1v1Url" :size=32 :limit-size=240 circle />
                                 <view class="my-2 w-32 text-center truncate">{{ item.name }}</view>
                             </view>
                         </view>
@@ -63,9 +63,9 @@
 
 <script setup lang="ts">
 import { ref, reactive, computed, nextTick, watchEffect } from 'vue';
+import type { Ref } from 'vue';
 import { options } from './artistOptions';
 import { artist } from '@/config/api/artist';
-import type { Artist } from '@/config/models/artist';
 import CoverItem from '@/components/CoverItem.vue';
 import Player from "@/components/Player.vue";
 import useList from '@/config/utils/useList';   // 列表加载Hooks
@@ -92,7 +92,6 @@ const pageData = reactive<PageData>({
     area: -1,
 });
 const scrollH = ref<number>(0) // scroll组件高度
-// const artistData = ref<Artist[]>([])
 const topArtist = computed(() => {
     return list.value.splice(0, 4)
 })
@@ -138,7 +137,7 @@ const getArtistData = async() => {
 }
 const { list, getData } = useList(getArtistData, 'artists', pageData)
 onReady(() => {
-    let scrollHeight:any = 0;
+    let scrollHeight:Ref<number>;
     scrollHeight = useScrollHeight()
     watchEffect(() => {
         scrollH.value = scrollHeight.value

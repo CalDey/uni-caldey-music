@@ -55,7 +55,7 @@ const endIdx = ref<number>(0)   // 结束索引
 watch(() => props.songs, (val) => {
     songList.value = val
     computedVirtualList()
-    console.log(val)
+    // console.log(val)
 })
 
 const computedVirtualList = () => { // 计算虚拟列表可视化区域

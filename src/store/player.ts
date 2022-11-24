@@ -108,14 +108,14 @@ export const usePlayerStore = defineStore({
                 this.songDetail();
                 setTimeout(() => {
                     if(!!uni.getBackgroundAudioManager) {
-                        // 后台播放数据显示
+                        // 微信小程序后台播放 数据显示
                         audio.title = this.song.name;   // 歌名
                         audio.singer = this.song.ar[0].name;    // 歌手名
                         audio.epname = this.song.al.name;   // 专辑名
                         audio.coverImgUrl = this.song.al.picUrl;    // 封面
                     }
                     audio.src = 'https://music.163.com/song/media/outer/url?id=' + data.id + '.mp3';
-                    console.log(audio.title)
+                    // console.log(audio.title)
                     audio.play();
                     this.isPlaying = true;
                     this.songUrl = data;

@@ -12,7 +12,7 @@
             </view>
         </view>
         <view id="top" v-else class="theme-card flex flex-col items-center w-full fixed z-10">
-            <CoverItem :imgUrl="artistDetail.cover" :size=32 :limit-size=120 circle />
+            <CoverItem :imgUrl="artistDetail.cover" :size=32 :limit-size=240 circle />
             <view class="mt-2 w-44 text-center theme-card-text truncate">{{ artistDetail.name }}</view>
             <view class="theme-card mt-2">
                 <view class="flex justify-center w-full text-lg">
@@ -67,6 +67,7 @@
 <script setup lang="ts">
 import { onLoad } from '@dcloudio/uni-app';
 import { ref, reactive, computed, nextTick, watchEffect } from 'vue';
+import type { Ref } from 'vue';
 import { artist } from '@/config/api/artist';
 import type { ArtistDetailArtist, Album } from '@/config/models/artist';
 import type { Song } from '@/config/models/song';
@@ -157,7 +158,7 @@ onLoad((options) => {
     getDetailData()
 })
 onReady(() => {
-    let scrollHeight:any = 0;
+    let scrollHeight:Ref<number>;
     scrollHeight = useScrollHeight()
     watchEffect(() => {
         scrollH.value = scrollHeight.value

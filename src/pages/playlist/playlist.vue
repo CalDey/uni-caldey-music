@@ -29,8 +29,9 @@
 
 <script setup lang="ts">
 import { ref, reactive, nextTick, watchEffect } from 'vue';
+import type { Ref } from 'vue';
 import { playlist } from '@/config/api/playlist';
-import type { PlaylistHighqualityTag, PlayListDetail } from "@/config/models/playlist";
+import type { PlaylistHighqualityTag } from "@/config/models/playlist";
 import Tag from "@/pages/playlist/components/Tag.vue";
 import PlayList from '@/components/PlayList.vue';
 import { useScrollHeight } from '@/config/utils/useScrollH';
@@ -51,7 +52,6 @@ interface PageData {
 
 const scrollH = ref<number>(0) // scroll组件高度
 const playListTags = ref<PlaylistHighqualityTag[]>([])
-// const list = ref<PlayListDetail[]>([]);
 
 const gotoPlayListDetailPage = (id: number) => {    // 页面跳转
     uni.navigateTo({
@@ -119,8 +119,8 @@ const getPlayListTags = async () => {
 getPlayListTags()
 
 onReady(() => {
-    let scrollHeight:any = 0;
-    scrollHeight = useScrollHeight() // H5高度修正 20
+    let scrollHeight:Ref<number>;
+    scrollHeight = useScrollHeight()
     watchEffect(() => {
         scrollH.value = scrollHeight.value
     })

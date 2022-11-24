@@ -23,6 +23,7 @@
 <script setup lang="ts">
 import { onLoad } from '@dcloudio/uni-app';
 import { ref, watchEffect } from 'vue';
+import type { Ref } from 'vue';
 import { playlist } from '@/config/api/playlist';
 import type { PlayListDetail } from '@/config/models/playlist';
 import type { Song } from '@/config/models/song';
@@ -66,7 +67,7 @@ const handleplayAll = () => {
 }
 
 onReady(() => {
-    let scrollHeight:any = 0;
+    let scrollHeight:Ref<number>;
     scrollHeight = useScrollHeight()
     watchEffect(() => {
         scrollH.value = scrollHeight.value
