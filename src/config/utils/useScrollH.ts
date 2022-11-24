@@ -1,5 +1,5 @@
 /** Hooks 动态计算scrollList滑动区域高度
- * @param {Number} 可选 -offset偏移量 手动微调scroll高度
+ * @param {Number} offset 可选 -offset偏移量 手动微调scroll高度
  * */ 
 import { ref, getCurrentInstance } from 'vue'
 
