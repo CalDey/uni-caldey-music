@@ -1,31 +1,33 @@
 <template>
     <view>
-        <view id="top" v-if="!artistDetail" class="theme-card flex flex-col items-center w-full fixed z-10">
-            <!-- skeleton -->
-            <view class="animate-pulse bg-gray-200 w-32 h-32 rounded-full"></view>
-            <view class="animate-pulse bg-gray-200 mt-2 w-44 h-6"></view>
-            <view class="theme-card mt-2">
-                <view class="flex justify-center w-full">
-                    <view class="animate-pulse bg-gray-200 mx-10 w-16 h-6"></view>
-                    <view class="animate-pulse bg-gray-200 mx-10 w-16 h-6"></view>
+        <view class="fixed z-10 fix-scroll">
+            <view id="top" v-if="!artistDetail" class="theme-card flex flex-col items-center">
+                <!-- skeleton -->
+                <view class="animate-pulse bg-gray-200 w-32 h-32 rounded-full"></view>
+                <view class="animate-pulse bg-gray-200 mt-2 w-44 h-6"></view>
+                <view class="theme-card mt-2">
+                    <view class="flex justify-center w-full">
+                        <view class="animate-pulse bg-gray-200 mx-10 w-16 h-6"></view>
+                        <view class="animate-pulse bg-gray-200 mx-10 w-16 h-6"></view>
+                    </view>
+                </view>
+            </view>
+            <view id="top" v-else class="theme-card flex flex-col items-center">
+                <CoverItem :imgUrl="artistDetail.cover" :size=32 :limit-size=240 circle />
+                <view class="mt-2 w-44 text-center theme-card-text truncate">{{ artistDetail.name }}</view>
+                <view class="theme-card mt-2">
+                    <view class="flex justify-center w-full text-lg">
+                        <view class="flex-1 text-center mx-14 tab__line"
+                            :class="selectTab === 'song' ? 'text-blue-300 tab__line_active' : ''"
+                            @click="tabChange('song')">歌曲</view>
+                        <view class="flex-1 text-center mx-14 tab__line"
+                            :class="selectTab === 'album' ? 'text-blue-300 tab__line_active' : ''"
+                            @click="tabChange('album')">专辑</view>
+                    </view>
                 </view>
             </view>
         </view>
-        <view id="top" v-else class="theme-card flex flex-col items-center w-full fixed z-10">
-            <CoverItem :imgUrl="artistDetail.cover" :size=32 :limit-size=240 circle />
-            <view class="mt-2 w-44 text-center theme-card-text truncate">{{ artistDetail.name }}</view>
-            <view class="theme-card mt-2">
-                <view class="flex justify-center w-full text-lg">
-                    <view class="flex-1 text-center mx-14 tab__line"
-                        :class="selectTab === 'song' ? 'text-blue-300 tab__line_active' : ''"
-                        @click="tabChange('song')">歌曲</view>
-                    <view class="flex-1 text-center mx-14 tab__line"
-                        :class="selectTab === 'album' ? 'text-blue-300 tab__line_active' : ''"
-                        @click="tabChange('album')">专辑</view>
-                </view>
-            </view>
-        </view>
-        <view class="pt-60 theme-card">
+        <view class="theme-card pt-64">
             <!-- 通过v-show隐藏，而非v-if销毁，防止切换导致歌单列表高度丢失 -->
             <view v-show="selectTab === 'song'">
                 <view v-if="scrollH === 0">
@@ -141,7 +143,7 @@ const getDetailData = async () => {
         })
     }
 }
-const getAlbumData = async(params:any) => {
+const getAlbumData = async(params:{id: number, offset: number}) => {
     try{
         const { hotAlbums, more } = await artist.getArtistAlbum(
             params.id,
@@ -159,7 +161,7 @@ onLoad((options) => {
 })
 onReady(() => {
     let scrollHeight:Ref<number>;
-    scrollHeight = useScrollHeight()
+    scrollHeight = useScrollHeight(34 + 8 + 16)
     watchEffect(() => {
         scrollH.value = scrollHeight.value
     })

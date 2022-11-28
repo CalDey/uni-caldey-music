@@ -11,6 +11,7 @@ export const useScrollHeight = (offset?: number):any => {
     const topEl = uni.createSelectorQuery().in(currentInstance).select('#top')  // 获取#top元素
     topEl.boundingClientRect((data) => {    // 获取顶部高度
         topHeight.value = (data as any).height
+        console.log(topHeight.value)
         scrollHeight.value = height - topHeight.value - (offset || 0)   // 计算剩余高度 offset 偏移量
     }).exec()
     return scrollHeight

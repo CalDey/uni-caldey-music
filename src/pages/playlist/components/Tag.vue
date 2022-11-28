@@ -1,5 +1,5 @@
 <template>
-    <view class="theme-card text-lg fixed fix-scroll z-10">
+    <view class="theme-card text-lg">
         <view v-if="tags.length <= 0" class="w-full">
             <view class="p-2">全部</view>
         </view>

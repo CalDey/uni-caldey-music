@@ -2,7 +2,7 @@
     <view>
         <Info id="top" v-if="type === 'album'" :playlistDetail="(albumDetail as Album)" album @playAll="handleplayAll" />
         <Info id="top" v-else :playlistDetail="(playlistDetail as PlayListDetail)" @playAll="handleplayAll"/>
-        <view class="pt-52">
+        <view class="">
             <view v-if="scrollH === 0 || songList.length <= 0">
                 <!-- skeleton -->
                 <view v-for="item in 10" :key="item" class="theme-card flex items-center my-2 text-lg">
@@ -68,7 +68,7 @@ const handleplayAll = () => {
 
 onReady(() => {
     let scrollHeight:Ref<number>;
-    scrollHeight = useScrollHeight()
+    scrollHeight = useScrollHeight(16)  // padding 8*2
     watchEffect(() => {
         scrollH.value = scrollHeight.value
     })

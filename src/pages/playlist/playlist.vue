@@ -2,7 +2,7 @@
     <view>
         <Tag id="top" :tags="playListTags" @tag-change="tagChange" />
         <!-- skeleton -->
-        <view class="pt-16 theme-card">
+        <view class="theme-card">
             <view v-if="scrollH === 0 || list.length <= 0">
                 <view v-if="pageData.tag" class="theme-card-text">{{pageData.tag}}歌单</view>
                 <view class="grid grid-cols-2 gap-4 py-2">
@@ -120,7 +120,7 @@ getPlayListTags()
 
 onReady(() => {
     let scrollHeight:Ref<number>;
-    scrollHeight = useScrollHeight()
+    scrollHeight = useScrollHeight(4 + 16)
     watchEffect(() => {
         scrollH.value = scrollHeight.value
     })

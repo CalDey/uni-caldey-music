@@ -41,7 +41,7 @@
                             </view>
                         </view>
                     </view>
-                    <view v-else class="grid grid-cols-2 gap-4 py-2 pb-24">
+                    <view v-else class="grid grid-cols-2 gap-4 py-2">
                         <!-- 前四人显示头像 -->
                         <view v-for="item in topArtist" :key="item.id" @click="gotoArtistDetailPage(item.id)">
                             <view class="flex flex-col items-center theme-card">
@@ -138,7 +138,7 @@ const getArtistData = async() => {
 const { list, getData } = useList(getArtistData, 'artists', pageData)
 onReady(() => {
     let scrollHeight:Ref<number>;
-    scrollHeight = useScrollHeight()
+    scrollHeight = useScrollHeight(12 + 8)
     watchEffect(() => {
         scrollH.value = scrollHeight.value
     })

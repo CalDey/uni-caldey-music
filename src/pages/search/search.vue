@@ -134,7 +134,7 @@ const gotoPage = (type: string, id: number) => {
 
 onReady(() => {
     let scrollHeight:Ref<number>;
-    scrollHeight = useScrollHeight(50);
+    scrollHeight = useScrollHeight(16 + 36 + 8);
     watchEffect(() => {
         scrollH.value = scrollHeight.value
     })

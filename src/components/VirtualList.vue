@@ -60,6 +60,9 @@ watch(() => props.songs, (val) => {
 
 const computedVirtualList = () => { // 计算虚拟列表可视化区域
     startIdx.value = Math.floor(scrollTop.value / itemHeight.value) // 可视化区域首位索引
+    if(startIdx.value < 0) {
+        startIdx.value = 0
+    }
     endIdx.value = startIdx.value + showNum.value
     showList.value = songList.value.slice(startIdx.value, endIdx.value)  // 获取可视化区域的数据
     top.value = scrollTop.value - (scrollTop.value % itemHeight.value)  // 获取偏移量
@@ -69,6 +72,7 @@ const scroll = (e: any) => {
     scrollTop.value = e.detail.scrollTop
     computedVirtualList()
 }
+
 
 const playAll = () => {
     pushPlayList(true, ...props.songs);
