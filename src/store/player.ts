@@ -86,7 +86,6 @@ export const usePlayerStore = defineStore({
             this.playList = [] as Song[];
             this.showPlayList = false;
             const audio = getPlayer();
-            // audio.seek(0);
             audio.stop();
             setTimeout(() => {
                 this.duration = 0;
@@ -189,7 +188,6 @@ export const usePlayerStore = defineStore({
             if (this.loopType === 2) {
                 this.randomPlay();
             } else {
-                // console.log('next');
                 if(this.id === this.nextSong.id) {
                     uni.showToast({
                         icon: "none",
@@ -253,14 +251,6 @@ export const usePlayerStore = defineStore({
                 this.loopType++;
             }
         },
-        // 静音切换
-        toggleMuted() {
-
-        },
-        // 音量设置
-        setVolume(n: number) {
-
-        },
         // 快进
         forward(val: number) {
             const audio = getPlayer();
@@ -279,10 +269,6 @@ export const usePlayerStore = defineStore({
         onSliderChange(val: number) {
             const audio = getPlayer();
             audio.seek(val);
-        },
-        // 播放时间拖动中
-        onSliderInput(val: number) {
-
         },
         // 定时器
         interval() {

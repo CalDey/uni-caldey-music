@@ -2,7 +2,7 @@
     <view class="mt-4 text-md relative" :style="{ 'height': scrollHeight + 'px'}">
         <MusicWave v-if="loading && scrollHeight" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" :height="256" :width="48" />
         <scroll-view v-else id="lyric" scroll-y :scroll-top="scrollH" :style="{ 'height': scrollHeight + 'px'}">
-            <view v-for="(item, index) in lyricData.lyric" :key="index" :data-index='index'
+            <view v-for="(item, index) in lyricData.lyric" :key="index"
             class="flex justify-center mx-8 text-center py-2 lyric-item"
             :class="lyricIndex === index ? 'text-blue-300 opacity-100 scale-110' : 'opacity-20'"
             @click="lyricJump(index)">
@@ -50,10 +50,11 @@ const handleLyricTransform = (currentTime: number) => { // 实现歌词同步滚
             return (currentTime <= item.time)
         })
         // const item = props.lyricData.lyric[curIdx - 1] // 获取当前歌词信息
-        // 获取lyric容器一般高度，用于实现自动滚动
-        const midLyricRef = uni.createSelectorQuery().in(currentInstance).select("#lyric");
-        midLyricRef.boundingClientRect((res) => {
+        // 获取lyric节点
+        const LyricRef = uni.createSelectorQuery().in(currentInstance).select("#lyric");
+        LyricRef.boundingClientRect((res) => {
             if(res) {
+                // 获取lyric高度的1/2，用于实现自动居中定位
                 const midLyricViewH = ((res as any).height / 2)
                 if(flag) {
                     // 实时获取最新Dom

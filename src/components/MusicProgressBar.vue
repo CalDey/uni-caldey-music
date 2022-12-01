@@ -1,10 +1,12 @@
 <template>
     <view class="w-full mt-4">
-        <view v-if="!duration" style="height: 52rpx" class="animate-pulse bg-gray-200"></view>
-        <view v-else class="flex justify-center ">
+        <!-- skeleton -->
+        <view v-if="!duration" style="height: 62rpx" class="animate-pulse bg-gray-200"></view>
+        <!-- progressBar -->
+        <view v-else class="flex justify-center items-center">
             <view class="mr-4">{{ moment(currentTime * 1000).format('mm:ss') }}</view>
             <view class="flex flex-shrink-0 justify-center items-center">
-                <view v-for="(item) in 34" :key="item" class="item"
+                <view v-for="(item) in 34" :key="item" class="progress-item"
                     :class="[currentLine < item ? 'line-' + (item) + '' : 'line-' + (item) + ' line_active' ]"
                     @click="moveProgress(item)"></view>
             </view>
@@ -28,7 +30,7 @@ const currentLine = computed(() => {    // 实时监听当前进度条位置
 })
 
 const moveProgress = (index: number) => {   // 拖动进度条改变歌曲播放进度
-    // 效果一般，小程序端拖拽存在明显延迟
+    // 小程序端拖拽时存在一定延迟
     const val = duration.value / 34;
     const newTime = Number((val * index).toFixed(0))
     onSliderChange(newTime)
@@ -37,7 +39,7 @@ const moveProgress = (index: number) => {   // 拖动进度条改变歌曲播放
 </script>
 
 <style lang="scss" scoped>
-.item {
+.progress-item {
     width: 8rpx;
     margin: 2rpx;
     @apply bg-slate-300;
@@ -48,55 +50,55 @@ const moveProgress = (index: number) => {   // 拖动进度条改变歌曲播放
 }
 
 .line-1 {
-    height: 4rpx;
+    height: 12rpx;
 }
 
 .line-2 {
-    height: 8rpx;
-}
-
-.line-3 {
     height: 16rpx;
 }
 
+.line-3 {
+    height: 26rpx;
+}
+
 .line-4 {
-    height: 8rpx;
+    height: 18rpx;
 }
 
 .line-5 {
-    height: 24rpx;
+    height: 34rpx;
 }
 
 .line-6 {
-    height: 32rpx;
+    height: 42rpx;
 }
 
 .line-7 {
-    height: 8rpx;
+    height: 28rpx;
 }
 
 .line-8 {
-    height: 40rpx;
+    height: 50rpx;
 }
 
 .line-9 {
-    height: 24rpx;
+    height: 34rpx;
 }
 
 .line-10 {
-    height: 8rpx;
+    height: 18rpx;
 }
 
 .line-11 {
-    height: 24rpx;
+    height: 34rpx;
 }
 
 .line-12 {
-    height: 44rpx;
+    height: 54rpx;
 }
 
 .line-13 {
-    height: 24rpx;
+    height: 34rpx;
 }
 
 .line-14 {
@@ -104,15 +106,15 @@ const moveProgress = (index: number) => {   // 拖动进度条改变歌曲播放
 }
 
 .line-15 {
-    height: 32rpx;
+    height: 42rpx;
 }
 
 .line-16 {
-    height: 52rpx;
+    height: 62rpx;
 }
 
 .line-17 {
-    height: 40rpx;
+    height: 50rpx;
 }
 
 .line-18 {
@@ -120,59 +122,59 @@ const moveProgress = (index: number) => {   // 拖动进度条改变歌曲播放
 }
 
 .line-19 {
-    height: 8rpx;
-}
-
-.line-20 {
     height: 12rpx;
 }
 
+.line-20 {
+    height: 22rpx;
+}
+
 .line-21 {
-    height: 24rpx;
+    height: 34rpx;
 }
 
 .line-22 {
-    height: 32rpx;
+    height: 42rpx;
 }
 
 .line-23 {
-    height: 52rpx;
+    height: 62rpx;
 }
 
 .line-24 {
-    height: 40rpx;
+    height: 50rpx;
 }
 
 .line-25 {
-    height: 24rpx;
+    height: 34rpx;
 }
 
 .line-26 {
-    height: 32rpx;
+    height: 42rpx;
 }
 
 .line-27 {
-    height: 52rpx;
+    height: 24rpx;
 }
 
 .line-28 {
-    height: 44rpx;
+    height: 34rpx;
 }
 
 .line-29 {
-    height: 32rpx;
+    height: 42rpx;
 }
 
 .line-30 {
-    height: 24rpx;
+    height: 34rpx;
+}
+
+.line-31 {
+    height: 28rpx;
 }
 
 .line-31 {
     height: 18rpx;
-}
-
-.line-31 {
-    height: 16rpx;
 }
 
 .line-32 {
@@ -180,10 +182,10 @@ const moveProgress = (index: number) => {   // 拖动进度条改变歌曲播放
 }
 
 .line-33 {
-    height: 8rpx;
+    height: 16rpx;
 }
 
 .line-34 {
-    height: 4rpx;
+    height: 12rpx;
 }
 </style>
