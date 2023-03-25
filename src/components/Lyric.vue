@@ -33,7 +33,6 @@ const currentInstance = getCurrentInstance();   // vue3绑定this
 
 // 监听歌曲播放进程
 watch(() => currentTime.value, (val) => {
-    // console.log(val)
     handleLyricTransform(val)
 })
 

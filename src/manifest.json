@@ -59,7 +59,7 @@
         "usingComponents" : true,
         "lazyCodeLoading" : "requiredComponents",
         "darkmode" : true,
-		"requiredBackgroundModes": ["audio"]	// 后台播放音乐权限
+        "requiredBackgroundModes" : [ "audio" ] // 后台播放音乐权限
     },
     "mp-alipay" : {
         "usingComponents" : true

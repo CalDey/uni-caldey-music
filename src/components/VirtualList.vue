@@ -25,6 +25,7 @@ import { ref, watch } from 'vue';
 import { storeToRefs } from 'pinia';
 import { usePlayerStore } from '@/store/player';
 import type { Song } from '@/config/models/song';
+import { throttle } from '@/config/utils/tools'
 import CoverItem from '@/components/CoverItem.vue';
 import MusicWave from '@/components/MusicWave.vue';
 
@@ -45,33 +46,31 @@ const top = ref<number>(0)  // 偏移量
 const scrollTop = ref<number>(0)    // 滚动高度
 const startIdx = ref<number>(0) // 起始索引
 const endIdx = ref<number>(0)   // 结束索引
-
-// const getDataList = () => { // 构造数据
-//     for(let i=0;i<200;i++){
-//         listAll.value.push(`我是第${i}号`)
-//     }
-// }
+const buffer = ref<number>(5)
 
 watch(() => props.songs, (val) => {
     songList.value = val
     computedVirtualList()
-    // console.log(val)
 })
 
 const computedVirtualList = () => { // 计算虚拟列表可视化区域
     startIdx.value = Math.floor(scrollTop.value / itemHeight.value) // 可视化区域首位索引
+    top.value = scrollTop.value - (scrollTop.value % itemHeight.value)  // 获取偏移量
     if(startIdx.value < 0) {
         startIdx.value = 0
     }
+    if(startIdx.value > buffer.value) {
+        top.value -= buffer.value * itemHeight.value
+        startIdx.value = startIdx.value - buffer.value
+    }
     endIdx.value = startIdx.value + showNum.value
     showList.value = songList.value.slice(startIdx.value, endIdx.value)  // 获取可视化区域的数据
-    top.value = scrollTop.value - (scrollTop.value % itemHeight.value)  // 获取偏移量
 }
 
-const scroll = (e: any) => {
+const scroll = throttle((e: { detail: { scrollTop: number; } }) => {
     scrollTop.value = e.detail.scrollTop
     computedVirtualList()
-}
+}, 50)
 
 
 const playAll = () => {

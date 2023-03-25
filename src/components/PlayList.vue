@@ -6,9 +6,9 @@
                 <view class="grid grid-cols-2 gap-4">
                     <view v-for="item in list" :key="item.id" @click="handlePageChange(item.id)">
                         <view style="width:100%;height:44vw;">
-                            <image v-if="album"  class="rounded-t-lg" style="width:100%;height:100%;display:block;" :src="(item as Album).picUrl + '?param=328y328'"
+                            <image v-if="album"  class="rounded-t-lg cover-img" style="width:100%;height:100%;display:block;" :src="(item as Album).picUrl + '?param=328y328'"
                                 mode="widthFix" lazy-load />
-                            <image v-else  class="rounded-t-lg" style="width:100%;height:100%;" :src="(item as PlayListDetail).coverImgUrl + '?param=328y328'"
+                            <image v-else  class="rounded-t-lg cover-img" style="width:100%;height:100%;" :src="(item as PlayListDetail).coverImgUrl + '?param=328y328'"
                                 mode="widthFix" lazy-load />
                         </view>
                         <view class="flex flex-col bg-white shadow-lg p-1 rounded-b-lg">
