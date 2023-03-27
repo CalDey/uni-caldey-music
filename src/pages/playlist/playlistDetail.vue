@@ -3,9 +3,9 @@
         <Info id="top" v-if="type === 'album'" :playlistDetail="(albumDetail as Album)" album @playAll="handleplayAll" />
         <Info id="top" v-else :playlistDetail="(playlistDetail as PlayListDetail)" @playAll="handleplayAll"/>
         <view class="">
-            <view v-if="scrollH === 0 || songList.length <= 0">
+            <view v-show="songList.length <= 0">
                 <!-- skeleton -->
-                <view v-for="item in 10" :key="item" class="theme-card flex items-center my-2 text-lg">
+                <view v-for="item in 6" :key="item" class="theme-card flex items-center my-2 text-lg">
                     <view class="flex justify-center w-8 h-4 animate-pulse bg-gray-200"></view>
                     <view class="w-14 h-14 flex-shrink-0 rounded-lg animate-pulse bg-gray-200 ml-2"></view>
                     <view class="pl-2">
@@ -14,7 +14,7 @@
                     </view>
                 </view>
             </view>
-            <VirtualList ref="elSongList" :scrollHeight="scrollH" :songs="songList" />
+            <VirtualList v-show="songList.length > 0" ref="elSongList" :scrollHeight="scrollH" :songs="songList" />
         </view>
     </view>
     <Player />
