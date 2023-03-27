@@ -15,7 +15,7 @@
                             @click="play(item.id)">
                             <CoverItem :imgUrl="item.al.picUrl" :size="14" :limit-size=112 />
                             <view class="pl-2 flex-1 truncate">
-                                <view class="truncate my-2 text-sm">{{item.al.name}}</view>
+                                <view class="truncate my-2 text-sm">{{item.name}}</view>
                                 <view class="truncate my-2 text-xs text-gray-500">{{item.ar[0].name}}</view>
                             </view>
                             <MusicWave v-if="item.id === id" />

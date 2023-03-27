@@ -46,7 +46,7 @@ const top = ref<number>(0)  // 偏移量
 const scrollTop = ref<number>(0)    // 滚动高度
 const startIdx = ref<number>(0) // 起始索引
 const endIdx = ref<number>(0)   // 结束索引
-const buffer = ref<number>(5)
+const buffer = ref<number>(2)
 
 watch(() => props.songs, (val) => {
     songList.value = val
@@ -70,7 +70,7 @@ const computedVirtualList = () => { // 计算虚拟列表可视化区域
 const scroll = throttle((e: { detail: { scrollTop: number; } }) => {
     scrollTop.value = e.detail.scrollTop
     computedVirtualList()
-}, 50)
+}, 20)
 
 
 const playAll = () => {

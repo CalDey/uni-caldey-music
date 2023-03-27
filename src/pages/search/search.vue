@@ -1,5 +1,5 @@
 <template>
-    <view>
+    <view @touchmove.stop.prevent="() => {}">
         <view id="top" class="pt-4 mx-2">
             <view class="flex items-center bg-gray-100 p-2 rounded-2xl shadow-lg">
                 <i class="iconfont icon-sousuo text-lg ml-2"></i>

@@ -14,4 +14,5 @@ onHide(() => {})
 @import 'static/icon/iconfont.css';
 @import 'tailwindcss/base';
 @import 'tailwindcss/utilities';
+::-webkit-scrollbar{display:none;}
 </style>

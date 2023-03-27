@@ -1,5 +1,5 @@
 <template>
-    <view>
+    <view @touchmove.stop.prevent="() => {}">
         <Tag id="top" :tags="playListTags" @tag-change="tagChange" />
         <!-- skeleton -->
         <view class="theme-card">

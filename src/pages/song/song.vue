@@ -1,5 +1,5 @@
 <template>
-    <view>
+    <view @touchmove.stop.prevent="() => {}">
         <view id="top" class="theme-card rounded-b-2xl">
             <view v-if="song.al" class="flex flex-col justify-center items-center mt-4">
                 <view v-if="!song.al.picUrl" class="w-40 h-40 rounded-lg animate-pulse bg-gray-200"></view>

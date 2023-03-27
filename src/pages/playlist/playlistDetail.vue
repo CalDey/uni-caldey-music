@@ -1,5 +1,5 @@
 <template>
-    <view>
+    <view @touchmove.stop.prevent="() => {}">
         <Info id="top" v-if="type === 'album'" :playlistDetail="(albumDetail as Album)" album @playAll="handleplayAll" />
         <Info id="top" v-else :playlistDetail="(playlistDetail as PlayListDetail)" @playAll="handleplayAll"/>
         <view class="">
