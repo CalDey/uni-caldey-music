@@ -1,6 +1,5 @@
 <template>
-    <view>
-        <view class="fixed z-10 fix-scroll">
+    <view class="main-container">
             <view id="top" v-if="!artistDetail" class="theme-card flex flex-col items-center">
                 <!-- skeleton -->
                 <view class="animate-pulse bg-gray-200 w-32 h-32 rounded-full"></view>
@@ -19,35 +18,24 @@
                     <view class="flex justify-center w-full text-lg">
                         <view class="flex-1 text-center mx-14 tab__line"
                             :class="selectTab === 'song' ? 'text-blue-300 tab__line_active' : ''"
-                            @click="tabChange('song')">歌曲</view>
+                            @click="tabChange('song')">
+                            歌曲
+                        </view>
                         <view class="flex-1 text-center mx-14 tab__line"
                             :class="selectTab === 'album' ? 'text-blue-300 tab__line_active' : ''"
-                            @click="tabChange('album')">专辑</view>
-                    </view>
-                </view>
-            </view>
-        </view>
-        <view class="theme-card pt-52">
-            <!-- 通过v-show隐藏，而非v-if销毁，防止切换导致歌单列表高度丢失 -->
-            <view v-show="selectTab === 'song'">
-                <view v-if="scrollH === 0">
-                    <!-- skeleton -->
-                    <view v-for="item in 10" :key="item" class="theme-card flex items-center my-2 text-lg">
-                        <view class="flex justify-center w-8 h-4 animate-pulse bg-gray-200"></view>
-                        <view class="w-14 h-14 flex-shrink-0 rounded-lg animate-pulse bg-gray-200 ml-2"></view>
-                        <view class="pl-2">
-                            <view class="animate-pulse bg-gray-200 w-60 h-6 my-2"></view>
-                            <view class="animate-pulse bg-gray-200 w-60 h-6"></view>
+                            @click="tabChange('album')">
+                            专辑
                         </view>
                     </view>
                 </view>
-                <VirtualList :scrollHeight="scrollH" :songs="songList" />
             </view>
+            <VirtualList v-show="selectTab === 'song'" class="scroll-container" :songs="songList" />
+            <!-- 通过v-show隐藏，而非v-if销毁，防止切换导致歌单列表高度丢失 -->
             <view v-show="selectTab === 'album'">
                 <view v-if="albumList.length <= 0">
-                    <view class="grid grid-cols-2 gap-4 py-2">
+                    <view class="grid grid-cols-2 gap-4 p-4">
                         <!-- skeleton -->
-                        <view v-for="item in 10" :key="item">
+                        <view v-for="item in 2" :key="item">
                             <view class="animate-pulse rounded-t-lg bg-gray-200" style="width:100%;height:44vw;"></view>
                             <view class="flex flex-col bg-white shadow-lg px-1 rounded-b-lg">
                                 <view>
@@ -62,7 +50,6 @@
                     @scroll="scroll" @onReachBottom="onReachBottom" @gotoPlayListDetailPage="gotoPlayListDetailPage" />
             </view>
         </view>
-    </view>
     <Player />
 </template>
 
@@ -161,7 +148,7 @@ onLoad((options) => {
 })
 onReady(() => {
     let scrollHeight:Ref<number>;
-    scrollHeight = useScrollHeight(18)
+    scrollHeight = useScrollHeight()
     watchEffect(() => {
         scrollH.value = scrollHeight.value
     })

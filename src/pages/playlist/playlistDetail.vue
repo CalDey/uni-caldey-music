@@ -1,21 +1,19 @@
 <template>
-    <view @touchmove.stop.prevent="() => {}">
+    <view class="main-container">
         <Info id="top" v-if="type === 'album'" :playlistDetail="(albumDetail as Album)" album @playAll="handleplayAll" />
         <Info id="top" v-else :playlistDetail="(playlistDetail as PlayListDetail)" @playAll="handleplayAll"/>
-        <view>
             <view v-show="songList.length <= 0">
-                <!-- skeleton -->
-                <view v-for="item in 4" :key="item" class="theme-card p-2 flex items-center my-2 text-lg">
-                    <view class="flex justify-center w-8 h-4 animate-pulse bg-gray-200"></view>
-                    <view class="w-14 h-14 flex-shrink-0 rounded-lg animate-pulse bg-gray-200 ml-2"></view>
-                    <view class="pl-2">
-                        <view class="animate-pulse bg-gray-200 w-60 h-6 my-2"></view>
-                        <view class="animate-pulse bg-gray-200 w-60 h-6"></view>
-                    </view>
+            <!-- skeleton -->
+            <view v-for="item in 4" :key="item" class="theme-card p-2 flex items-center my-2 text-lg">
+                <view class="flex justify-center w-8 h-4 animate-pulse bg-gray-200"></view>
+                <view class="w-14 h-14 flex-shrink-0 rounded-lg animate-pulse bg-gray-200 ml-2"></view>
+                <view class="pl-2">
+                    <view class="animate-pulse bg-gray-200 w-60 h-6 my-2"></view>
+                    <view class="animate-pulse bg-gray-200 w-60 h-6"></view>
                 </view>
             </view>
-            <VirtualList v-show="songList.length > 0" ref="elSongList" :scrollHeight="scrollH" :songs="songList" />
         </view>
+        <VirtualList class="scroll-container" v-show="songList.length > 0" ref="elSongList" :songs="songList" />
     </view>
     <Player />
 </template>

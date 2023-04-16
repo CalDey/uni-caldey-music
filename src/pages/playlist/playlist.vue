@@ -1,10 +1,10 @@
 <template>
-    <view @touchmove.stop.prevent="() => {}">
+    <view>
         <Tag id="top" :tags="playListTags" @tag-change="tagChange" />
         <!-- skeleton -->
-        <view class="theme-card">
+        <view>
             <view class="theme-card p-2" v-if="scrollH === 0 || list.length <= 0">
-                <view v-if="pageData.tag" class="theme-card-text">{{pageData.tag}}歌单</view>
+                <view v-if="pageData.tag" class="theme-card-text mb-2">{{pageData.tag}}歌单</view>
                 <view class="grid grid-cols-2 gap-4 py-2">
                     <!-- skeleton -->
                     <view v-for="item in 4" :key="item">
@@ -18,7 +18,7 @@
                     </view>
                 </view>
             </view>
-            <view class="theme-card" v-else>
+            <view v-else>
                 <PlayList :scrollHeight="scrollH" :pageData="pageData" :list="list" :scrollTop="scrollTop"
                     @scroll="scroll" @onReachBottom="onReachBottom" @gotoPlayListDetailPage="gotoPlayListDetailPage" />
             </view>
@@ -120,7 +120,7 @@ getPlayListTags()
 
 onReady(() => {
     let scrollHeight:Ref<number>;
-    scrollHeight = useScrollHeight(4)
+    scrollHeight = useScrollHeight()
     watchEffect(() => {
         scrollH.value = scrollHeight.value
     })

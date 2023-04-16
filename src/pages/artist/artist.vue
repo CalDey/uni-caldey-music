@@ -1,6 +1,6 @@
 <template>
     <view>
-        <view id="top" class="theme-card text-sm fixed fix-scroll z-10">
+        <view id="top" class="theme-card p-2 text-sm z-10">
             <!-- 歌手筛选列表 -->
             <view v-for="option in options" :key="option.key">
                 <scroll-view scroll-x class="py-2 w-full" style="white-space: nowrap;">
@@ -18,9 +18,9 @@
             </view>
         </view>
         <!-- 歌手列表 -->
-        <view class="text-sm pt-44">
+        <view class="text-sm">
             <view v-if="scrollH === 0 || list.length <= 0">
-                <view class="grid grid-cols-2 gap-4 py-2">
+                <view class="grid grid-cols-2 gap-4 box-border">
                     <!-- skeleton -->
                     <view v-for="item in 2" :key="item">
                         <view class="flex flex-col items-center theme-card">
@@ -31,8 +31,8 @@
                 </view>
             </view>
             <view v-else>
-                <scroll-view class="theme-card" :style="{'height': scrollH + 'px'}" :scroll-top="scrollTop" scroll-y @scroll="scroll" @scrolltolower="onReachBottom">
-                    <view v-if="(topArtist as any).length <= 0" class="grid grid-cols-2 gap-4 py-2">
+                <scroll-view class="box-border py-2" :style="{'height': scrollH + 'px'}" :scroll-top="scrollTop" scroll-y @scroll="scroll" @scrolltolower="onReachBottom">
+                    <view v-if="(topArtist as any).length <= 0" class="grid grid-cols-2 gap-4 p-2">
                         <!-- skeleton -->
                         <view v-for="item in 4" :key="item">
                             <view class="flex flex-col items-center theme-card">
@@ -41,7 +41,7 @@
                             </view>
                         </view>
                     </view>
-                    <view v-else class="grid grid-cols-2 gap-4 py-2">
+                    <view v-else class="grid grid-cols-2 gap-4">
                         <!-- 前四人显示头像 -->
                         <view v-for="item in topArtist" :key="item.id" @click="gotoArtistDetailPage(item.id)">
                             <view class="flex flex-col items-center theme-card">
@@ -86,7 +86,7 @@ const pageData = reactive<PageData>({
     loading: false,
     more: true,
     page: 1,
-    limit: 10,
+    limit: 20,
     initial: '-1',
     type: -1,
     area: -1,
@@ -138,7 +138,7 @@ const getArtistData = async() => {
 const { list, getData } = useList(getArtistData, 'artists', pageData)
 onReady(() => {
     let scrollHeight:Ref<number>;
-    scrollHeight = useScrollHeight()
+    scrollHeight = useScrollHeight();
     watchEffect(() => {
         scrollH.value = scrollHeight.value
     })

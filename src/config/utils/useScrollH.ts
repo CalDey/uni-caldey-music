@@ -4,7 +4,7 @@
 import { ref, getCurrentInstance } from 'vue'
 import type { Ref } from 'vue';
 
-export const useScrollHeight = (offset? : number):Ref => {
+export const useScrollHeight = (offset : number = 3):Ref => {
     const scrollHeight = ref<number>(0) // scroll组件高度
     const topHeight = ref<number>(0)    // 组件上方占用高度
     const currentInstance = getCurrentInstance();   // vue3绑定this
@@ -12,7 +12,7 @@ export const useScrollHeight = (offset? : number):Ref => {
     const topEl = uni.createSelectorQuery().in(currentInstance).select('#top')  // 获取#top元素
     topEl.boundingClientRect((data) => {    // 获取顶部高度
         topHeight.value = (data as any).height
-        // console.log(topHeight.value)
+        console.log(topHeight.value)
         scrollHeight.value = height - topHeight.value - (offset || 0)  // 计算剩余高度 offset 偏移量
         // console.log(scrollHeight.value)
     }).exec()

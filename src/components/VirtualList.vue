@@ -1,6 +1,5 @@
-<template>
-	<view>		
-		<scroll-view class="scroll-box theme-card" :style="{'height': scrollHeight + 'px'}" scroll-y="true" @scroll="scroll">
+<template>		
+		<scroll-view class="scroll-box theme-card" scroll-y @scroll="scroll">
             <!--可视区域-->
             <view class="w-full pb-16" :style="{position: 'absolute', top: top + 'px'}">
                 <view v-for="(item, index) in showList" :key="item.id" class="theme-card flex items-center m-2 p-2 text-lg" @click="play(item.id)">
@@ -16,8 +15,7 @@
                     <i v-else class="iconfont icon-bofang text-2xl ml-2"></i>
                 </view>
             </view>
-		</scroll-view>		
-	</view>
+		</scroll-view>
 </template>
 
 <script setup lang="ts">
@@ -35,7 +33,7 @@ const { play, pushPlayList } = usePlayerStore();
 
 const props = defineProps<{
     songs: Song[];
-    scrollHeight: number;
+    // scrollHeight: number;
 }>()
 
 const songList = ref<Song[]>([])    // 歌单数据
@@ -85,6 +83,6 @@ defineExpose({ playAll })
 
 <style lang="scss" scoped>
 .scroll-box{
-    @apply relative w-full;
+    @apply relative w-full h-full;
 }
 </style>

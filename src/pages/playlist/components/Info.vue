@@ -1,5 +1,5 @@
 <template>
-    <view class="">
+    <view>
         <view v-if="!playlistDetail" class="theme-card p-4 ">
             <view class="flex">
                 <view class="w-32 h-32 rounded-lg flex-shrink-0 animate-pulse bg-gray-200"></view>

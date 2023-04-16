@@ -1,7 +1,7 @@
 <template>
     <view>
         <view class="mt-2 theme-card p-2 theme-card-text">推荐新音乐</view>
-        <view class="theme-card pb-24">
+        <view class="theme-card p-2 pb-24">
             <ul v-if="(PersonalizedNewSongData as any).length <= 0">
                 <!-- skeleton -->
                 <li v-for="item in 5" :key="item" class="flex items-center mb-2 theme-card p-2">
