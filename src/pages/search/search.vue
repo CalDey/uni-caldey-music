@@ -11,7 +11,7 @@
             <view v-if="!suggestSearch">
                 <view class="text-xl font-bold mt-4">热门搜索</view>
                 <view class="mt-2 flex flex-wrap">
-                    <view v-for="(item, index) in hotSearch" :key="index" class="mr-4 mb-4 theme-card text-sm" @click="selectKeyword(item)">
+                    <view v-for="(item, index) in hotSearch" :key="index" class="mr-4 mb-4 theme-card p-2 text-sm" @click="selectKeyword(item)">
                         {{item.first}}
                     </view>
                 </view>
@@ -19,7 +19,7 @@
             <view v-else>
                 <view class="text-xl font-bold my-4">搜索建议</view>
                 <view>
-                    <view v-if="suggestSearch.artists" class="theme-card text-sm">
+                    <view v-if="suggestSearch.artists" class="theme-card p-2 text-sm">
                         <view class="font-bold my-2">歌手</view>
                         <view v-for="item in suggestSearch.artists" :key="item.id"
                             class="flex flex-row items-center mb-2" @click="gotoPage('artist', item.id)">
@@ -27,7 +27,7 @@
                             <view class="flex-1 truncate ml-2">{{item.name}}</view>
                         </view>
                     </view>
-                    <view v-if="suggestSearch.albums" class="theme-card text-sm">
+                    <view v-if="suggestSearch.albums" class="theme-card p-2 text-sm">
                         <view class="font-bold my-2">专辑</view>
                         <view v-for="item in suggestSearch.albums" :key="item.id"
                             class="flex flex-row items-center mb-2" @click="gotoPage('album', item.id)">
@@ -35,7 +35,7 @@
                             <view class="truncate ml-4 text-sm text-gray-500">{{item.artist.name}}</view>
                         </view>
                     </view>
-                    <view v-if="suggestSearch.songs" class="theme-card text-sm">
+                    <view v-if="suggestSearch.songs" class="theme-card p-2 text-sm">
                         <view class="font-bold my-2">单曲</view>
                         <view v-for="item in suggestSearch.songs" :key="item.id" class="flex flex-row items-center mb-2"
                             @click="gotoPage('song', item.id)">

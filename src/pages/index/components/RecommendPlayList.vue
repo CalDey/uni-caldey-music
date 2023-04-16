@@ -1,7 +1,7 @@
 <template>
     <view>
-        <view class="mt-2 theme-card theme-card-text">推荐歌单</view>
-        <view class="theme-card">
+        <view class="mt-2 theme-card p-2 theme-card-text">推荐歌单</view>
+        <view class="theme-card p-2">
             <scroll-view scroll-x class="w-full" style="white-space: nowrap;">
                 <view v-if="(personalizedData as any).length <= 0">
                     <!-- skeleton -->

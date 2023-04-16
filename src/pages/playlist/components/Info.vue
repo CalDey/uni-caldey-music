@@ -19,30 +19,24 @@
                 <CoverItem v-if="album" :imgUrl="(playlistDetail as Album).picUrl" :size=32 :limit-size=256 />
                 <CoverItem v-else :imgUrl="(playlistDetail as PlayListDetail).coverImgUrl" :size=32 :limit-size=256 />
                 <view class="ml-2">
-                    <view class="text-ellipsis theme-card-text">{{playlistDetail.name}}</view>
+                    <view class="text-ellipsis theme-card-text">{{ playlistDetail.name }}</view>
                     <view class="flex items-center mt-2">
-                        <image
-                            v-if="album"
-                            class="w-6 h-6 rounded-full"
-                            :src="(playlistDetail as Album).artist.picUrl"
-                            mode="scaleToFill"
-                        />
-                        <image
-                            v-else
-                            class="w-6 h-6 rounded-full"
-                            :src="(playlistDetail as PlayListDetail).creator.avatarUrl"
-                            mode="scaleToFill"
-                        />
-                        <view v-if="album" class="text-sm text-gray-500 ml-2 w-44 truncate">{{ (playlistDetail as Album).artist.name }}</view>
-                        <view v-else class="text-sm text-gray-500 ml-2 w-44 truncate">{{ (playlistDetail as PlayListDetail).creator.nickname }}</view>
+                        <image v-if="album" class="w-6 h-6 rounded-full" :src="(playlistDetail as Album).artist.picUrl"
+                            mode="scaleToFill" />
+                        <image v-else class="w-6 h-6 rounded-full"
+                            :src="(playlistDetail as PlayListDetail).creator.avatarUrl" mode="scaleToFill" />
+                        <view v-if="album" class="text-sm text-gray-500 ml-2 w-44 truncate">{{ (playlistDetail as
+                            Album).artist.name }}</view>
+                        <view v-else class="text-sm text-gray-500 ml-2 w-44 truncate">{{ (playlistDetail as
+                            PlayListDetail).creator.nickname }}</view>
                     </view>
-                    <view class="text-sm w-44 text-ellipsis mt-2 text-gray-500">简介：{{playlistDetail.description}}</view>
+                    <view class="text-sm w-44 text-ellipsis mt-2 text-gray-500">简介：{{ playlistDetail.description }}</view>
                 </view>
             </view>
-       </view>
-       <view class="pl-4 text-lg flex items-center theme-card bg-slate-100" @click="handlePlayAll">
-                <i class="iconfont icon-bofang text-2xl mr-2"></i>
-                <text>播放全部</text>
+        </view>
+        <view class="pl-4 text-lg flex items-center theme-card p-2 bg-slate-100" @click="handlePlayAll">
+            <i class="iconfont icon-bofang text-2xl mr-2"></i>
+            <text>播放全部</text>
         </view>
     </view>
 </template>
@@ -57,7 +51,7 @@ defineProps<{
 }>()
 
 const emit = defineEmits<{
-    (e: 'playAll'):void
+    (e: 'playAll'): void
 }>()
 
 const handlePlayAll = () => {

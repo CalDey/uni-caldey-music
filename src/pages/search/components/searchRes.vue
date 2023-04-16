@@ -1,7 +1,7 @@
 <template>
     <view class="mt-4 mx-2">
         <view class="flex">
-            <view v-for="(item, index) in tags" :key="index" class="theme-card flex-1 text-center text-sm"
+            <view v-for="(item, index) in tags" :key="index" class="theme-card p-2 flex-1 text-center text-sm"
                 :class="index === curIdx ? 'bg-blue-300 text-white' : ''" @click="changeTag(index)">
                 {{item.name}}
             </view>
@@ -11,7 +11,7 @@
                 <view>
                     <!-- 单曲 -->
                     <ul v-if="type === 1">
-                        <li v-for="item in searchSongData" :key="item.id" class="theme-card mb-2 flex items-center"
+                        <li v-for="item in searchSongData" :key="item.id" class="theme-card p-2 mb-2 flex items-center"
                             @click="play(item.id)">
                             <CoverItem :imgUrl="item.al.picUrl" :size="14" :limit-size=112 />
                             <view class="pl-2 flex-1 truncate">
@@ -24,14 +24,14 @@
                     </ul>
                     <!-- 歌手 -->
                     <ul v-else-if="type === 100">
-                        <li v-for="item in searchArtistData" :key="item.id" class="theme-card mb-2 flex items-center" @click="gotoPage('artist', item.id)">
+                        <li v-for="item in searchArtistData" :key="item.id" class="theme-card p-2 mb-2 flex items-center" @click="gotoPage('artist', item.id)">
                             <CoverItem :imgUrl="item.picUrl" :size="14" :limit-size=112 />
                             <view class="truncate ml-2 text-sm">{{item.name}}</view>
                         </li>
                     </ul>
                     <!-- 歌单 -->
                     <ul v-else-if="type === 1000">
-                        <li v-for="item in searchPlayListData" :key="item.id" class="theme-card mb-2 flex items-center" @click="gotoPage('playlist', item.id)">
+                        <li v-for="item in searchPlayListData" :key="item.id" class="theme-card p-2 mb-2 flex items-center" @click="gotoPage('playlist', item.id)">
                             <CoverItem :imgUrl="item.coverImgUrl" :size="14" :limit-size=112 />
                             <view class="pl-2 flex-1 truncate">
                                 <view class="truncate my-2 text-sm">{{item.name}}</view>
@@ -41,7 +41,7 @@
                     </ul>
                     <!-- 专辑 -->
                     <ul v-else-if="type === 10">
-                        <li v-for="item in searchAlbumData" :key="item.id" class="theme-card mb-2 flex items-center" @click="gotoPage('album', item.id)">
+                        <li v-for="item in searchAlbumData" :key="item.id" class="theme-card p-2 mb-2 flex items-center" @click="gotoPage('album', item.id)">
                             <CoverItem :imgUrl="item.blurPicUrl" :size="14" :limit-size=112 />
                             <view class="pl-2 flex-1 truncate">
                                 <view class="truncate my-2 text-sm">{{item.name}}</view>

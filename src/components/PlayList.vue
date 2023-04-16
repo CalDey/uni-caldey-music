@@ -1,6 +1,5 @@
 <template>
-    <view>
-        <scroll-view :style="{'height': scrollHeight + 'px'}" :scroll-top="scrollTop" scroll-y @scroll="handleScroll" @scrolltolower="handleReachBottom">
+        <scroll-view class="theme-card p-2" :style="{'height': scrollHeight + 'px'}" :scroll-top="scrollTop" scroll-y @scroll="handleScroll" @scrolltolower="handleReachBottom">
             <view v-if="pageData.tag" class="theme-card-text">{{pageData.tag}}歌单</view>
             <view class="py-2 pb-24">
                 <view class="grid grid-cols-2 gap-4">
@@ -21,7 +20,6 @@
                 <Loading :loading="pageData.loading" />
             </view>
         </scroll-view>
-    </view>
 </template>
 
 <script setup lang="ts">

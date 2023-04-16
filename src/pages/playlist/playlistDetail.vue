@@ -2,10 +2,10 @@
     <view @touchmove.stop.prevent="() => {}">
         <Info id="top" v-if="type === 'album'" :playlistDetail="(albumDetail as Album)" album @playAll="handleplayAll" />
         <Info id="top" v-else :playlistDetail="(playlistDetail as PlayListDetail)" @playAll="handleplayAll"/>
-        <view class="">
+        <view>
             <view v-show="songList.length <= 0">
                 <!-- skeleton -->
-                <view v-for="item in 6" :key="item" class="theme-card flex items-center my-2 text-lg">
+                <view v-for="item in 4" :key="item" class="theme-card p-2 flex items-center my-2 text-lg">
                     <view class="flex justify-center w-8 h-4 animate-pulse bg-gray-200"></view>
                     <view class="w-14 h-14 flex-shrink-0 rounded-lg animate-pulse bg-gray-200 ml-2"></view>
                     <view class="pl-2">
@@ -68,7 +68,7 @@ const handleplayAll = () => {
 
 onReady(() => {
     let scrollHeight:Ref<number>;
-    scrollHeight = useScrollHeight(16)  // padding 8*2
+    scrollHeight = useScrollHeight(18)
     watchEffect(() => {
         scrollH.value = scrollHeight.value
     })

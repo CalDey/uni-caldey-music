@@ -1,5 +1,5 @@
 <template>
-    <view class="mt-4 text-md relative" :style="{ 'height': scrollHeight + 'px'}">
+    <view class="text-md relative" :style="{ 'height': scrollHeight + 'px'}">
         <MusicWave v-if="loading && scrollHeight" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" :height="256" :width="48" />
         <scroll-view v-else id="lyric" scroll-y :scroll-top="scrollH" :style="{ 'height': scrollHeight + 'px'}">
             <view v-for="(item, index) in lyricData.lyric" :key="index"

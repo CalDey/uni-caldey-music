@@ -142,8 +142,10 @@ export const usePlayerStore = defineStore({
         // 获取歌词
         async getLyric(id: number) {
             const lyricData = await getSongLyric(id);
-            const lyric = JSON.parse(JSON.stringify(lyricData)).lyric;
-            return lyric
+            if(lyricData) {
+                const lyric = JSON.parse(JSON.stringify(lyricData)).lyric;
+                return lyric
+            }
         },
         // 缓存歌词
         saveLyric(currentLyric: any) {

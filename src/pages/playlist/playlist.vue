@@ -3,11 +3,11 @@
         <Tag id="top" :tags="playListTags" @tag-change="tagChange" />
         <!-- skeleton -->
         <view class="theme-card">
-            <view v-if="scrollH === 0 || list.length <= 0">
+            <view class="theme-card p-2" v-if="scrollH === 0 || list.length <= 0">
                 <view v-if="pageData.tag" class="theme-card-text">{{pageData.tag}}歌单</view>
                 <view class="grid grid-cols-2 gap-4 py-2">
                     <!-- skeleton -->
-                    <view v-for="item in 10" :key="item">
+                    <view v-for="item in 4" :key="item">
                         <view class="animate-pulse rounded-t-lg bg-gray-200" style="width:100%;height:44vw;"></view>
                         <view class="flex flex-col bg-white shadow-lg px-1 rounded-b-lg">
                             <view>
@@ -18,7 +18,7 @@
                     </view>
                 </view>
             </view>
-            <view v-else>
+            <view class="theme-card" v-else>
                 <PlayList :scrollHeight="scrollH" :pageData="pageData" :list="list" :scrollTop="scrollTop"
                     @scroll="scroll" @onReachBottom="onReachBottom" @gotoPlayListDetailPage="gotoPlayListDetailPage" />
             </view>
@@ -120,7 +120,7 @@ getPlayListTags()
 
 onReady(() => {
     let scrollHeight:Ref<number>;
-    scrollHeight = useScrollHeight(4 + 16)
+    scrollHeight = useScrollHeight(4)
     watchEffect(() => {
         scrollH.value = scrollHeight.value
     })

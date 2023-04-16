@@ -1,23 +1,21 @@
 <template>
     <uni-drawer ref="showRight" mode="right" :width="220">
         <view>
-            <view class="flex items-center">
+            <view class="flex items-center w-full">
                 <view class="m-2">
-                    <text class="theme-card-text">播放列表</text>
-                    <text class="text-sm ml-2">{{playList.length}}首</text>
-                </view>
-                <view>
-                    <i class="iconfont icon-empty text-xl ml-2" @click="clearPlayList"></i>
-                </view>
-                <view class="flex flex-1 justify-end items-center mr-4 text-sm" @click="toggleLoop">
-                    <i class="iconfont text-2xl ml-2"
-                    :class="loopType === 0 ? 'icon-liebiaoxunhuan' : loopType === 1 ? 'icon-danquxunhuan' : 'icon-suijibofang'"></i>
-                    <!-- {{ loopType === 0 ? '列表循环' : loopType === 1 ? '单曲循环' : '随机播放' }} -->
+                    <view class="theme-card-text flex">
+                        <text>播放列表</text>
+                        <i class="iconfont text-2xl ml-2" @click="toggleLoop"
+                        :class="loopType === 0 ? 'icon-liebiaoxunhuan' : loopType === 1 ? 'icon-danquxunhuan' : 'icon-suijibofang'"></i>
+                        <!-- {{ loopType === 0 ? '列表循环' : loopType === 1 ? '单曲循环' : '随机播放' }} -->
+                        <i class="iconfont icon-empty text-xl ml-2" @click="clearPlayList"></i>
+                    </view>
+                    <view class="text-sm">{{playList.length}}首</view>
                 </view>
             </view>
 
             <scroll-view style="height: 100vh;" scroll-y>
-                <view class="pb-12">
+                <view class="pb-16">
                     <view v-for="(song, index) in playList" :key="song.id">
                         <view class="m-2 theme-card flex items-center text-lg">
                             <view class="w-8 text-center mr-2">{{index + 1}}</view>

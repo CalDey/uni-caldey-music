@@ -1,16 +1,16 @@
 <template>
-	<view class="theme-card">		
-		<scroll-view class="scroll-box" :style="{'height': scrollHeight + 'px'}" scroll-y="true" @scroll="scroll">
+	<view>		
+		<scroll-view class="scroll-box theme-card" :style="{'height': scrollHeight + 'px'}" scroll-y="true" @scroll="scroll">
             <!--可视区域-->
-            <view class="w-full pb-32" :style="{position: 'absolute', top: top + 'px'}">
-                <view v-for="(item, index) in showList" :key="item.id" class="theme-card flex items-center my-2 text-lg" @click="play(item.id)">
+            <view class="w-full pb-16" :style="{position: 'absolute', top: top + 'px'}">
+                <view v-for="(item, index) in showList" :key="item.id" class="theme-card flex items-center m-2 p-2 text-lg" @click="play(item.id)">
                     <view class="flex justify-center w-10">{{index + startIdx + 1}}</view>
                     <view class="flex items-center">
                         <CoverItem :imgUrl="item.al.picUrl" :size=14 :limit-size=112 />
                     </view>
                     <view class="pl-2 w-48">
-                        <view class="truncate my-2 text-sm">{{item.name}}</view>
-                        <view class="truncate my-2 text-xs text-gray-500">{{item.ar[0].name}}</view>
+                        <view class="truncate m-2 text-sm">{{item.name}}</view>
+                        <view class="truncate m-2 text-xs text-gray-500">{{item.ar[0].name}}</view>
                     </view>
                     <MusicWave v-if="item.id === id" />
                     <i v-else class="iconfont icon-bofang text-2xl ml-2"></i>

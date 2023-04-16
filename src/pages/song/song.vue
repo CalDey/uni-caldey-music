@@ -1,6 +1,6 @@
 <template>
     <view @touchmove.stop.prevent="() => {}">
-        <view id="top" class="theme-card rounded-b-2xl">
+        <view id="top" class="theme-card p-2 rounded-b-2xl">
             <view v-if="song.al" class="flex flex-col justify-center items-center mt-4">
                 <view v-if="!song.al.picUrl" class="w-40 h-40 rounded-lg animate-pulse bg-gray-200"></view>
                 <image v-else class="w-40 h-40 rounded-lg" :src="song.al.picUrl + '?param=320y320'"></image>
@@ -66,7 +66,7 @@ getLyric(id.value).then((res) => {
 
 onReady(() => {
     let scrollHeight:Ref<number>;
-    scrollHeight = useScrollHeight(20);
+    scrollHeight = useScrollHeight(18);
     watchEffect(() => {
         scrollH.value = scrollHeight.value
     })

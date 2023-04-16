@@ -1,10 +1,10 @@
 <template>
     <view>
-        <view class="mt-2 theme-card theme-card-text">推荐新音乐</view>
+        <view class="mt-2 theme-card p-2 theme-card-text">推荐新音乐</view>
         <view class="theme-card pb-24">
             <ul v-if="(PersonalizedNewSongData as any).length <= 0">
                 <!-- skeleton -->
-                <li v-for="item in 5" :key="item" class="flex items-center mb-2 theme-card">
+                <li v-for="item in 5" :key="item" class="flex items-center mb-2 theme-card p-2">
                     <view class="animate-pulse bg-gray-200 w-14 h-14 flex-shrink-0 rounded-lg"></view>
                     <view class="pl-2 w-60">
                         <view class="animate-pulse bg-gray-200 w-56 h-6 my-2"></view>
@@ -14,7 +14,7 @@
             </ul>
             <ul v-else>
                 <li v-for="item in (PersonalizedNewSongData as PersonalizedNewSong[])" :key="item.id"
-                class="flex items-center mb-2 theme-card"
+                class="flex items-center mb-2 theme-card p-2"
                 @click="play(item.id)">
                     <CoverItem :imgUrl="item.picUrl" :size="14" :limit-size=112 />
                     <view class="pl-2 flex-1 truncate">

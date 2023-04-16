@@ -18,11 +18,11 @@
             </view>
         </view>
         <!-- 歌手列表 -->
-        <view class="theme-card text-sm pt-52">
+        <view class="text-sm pt-44">
             <view v-if="scrollH === 0 || list.length <= 0">
                 <view class="grid grid-cols-2 gap-4 py-2">
                     <!-- skeleton -->
-                    <view v-for="item in 4" :key="item">
+                    <view v-for="item in 2" :key="item">
                         <view class="flex flex-col items-center theme-card">
                             <view class="animate-pulse bg-gray-200 rounded-full w-32 h-32"></view>
                             <view class="animate-pulse bg-gray-200 my-2 w-20 h-4 text-center"></view>
@@ -31,7 +31,7 @@
                 </view>
             </view>
             <view v-else>
-                <scroll-view :style="{'height': scrollH + 'px'}" :scroll-top="scrollTop" scroll-y @scroll="scroll" @scrolltolower="onReachBottom">
+                <scroll-view class="theme-card" :style="{'height': scrollH + 'px'}" :scroll-top="scrollTop" scroll-y @scroll="scroll" @scrolltolower="onReachBottom">
                     <view v-if="(topArtist as any).length <= 0" class="grid grid-cols-2 gap-4 py-2">
                         <!-- skeleton -->
                         <view v-for="item in 4" :key="item">
@@ -50,7 +50,7 @@
                                 <view class="my-2 w-32 text-center truncate">{{ item.name }}</view>
                             </view>
                         </view>
-                        <view v-for="item in list" :key="item.id" class="truncate theme-card" @click="gotoArtistDetailPage(item.id)">
+                        <view v-for="item in list" :key="item.id" class="truncate theme-card p-2" @click="gotoArtistDetailPage(item.id)">
                         {{ item.name }}
                         </view>
                     </view>
@@ -138,7 +138,7 @@ const getArtistData = async() => {
 const { list, getData } = useList(getArtistData, 'artists', pageData)
 onReady(() => {
     let scrollHeight:Ref<number>;
-    scrollHeight = useScrollHeight(12 + 8)
+    scrollHeight = useScrollHeight()
     watchEffect(() => {
         scrollH.value = scrollHeight.value
     })

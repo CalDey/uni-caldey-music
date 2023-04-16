@@ -27,7 +27,7 @@
                 </view>
             </view>
         </view>
-        <view class="theme-card pt-64">
+        <view class="theme-card pt-52">
             <!-- 通过v-show隐藏，而非v-if销毁，防止切换导致歌单列表高度丢失 -->
             <view v-show="selectTab === 'song'">
                 <view v-if="scrollH === 0">
@@ -161,7 +161,7 @@ onLoad((options) => {
 })
 onReady(() => {
     let scrollHeight:Ref<number>;
-    scrollHeight = useScrollHeight(34 + 8 + 16)
+    scrollHeight = useScrollHeight(18)
     watchEffect(() => {
         scrollH.value = scrollHeight.value
     })
