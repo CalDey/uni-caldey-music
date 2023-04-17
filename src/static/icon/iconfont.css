@@ -1,8 +1,9 @@
 @font-face {
-  font-family: "iconfont"; /* Project id 3704850 */
-  src: url('//at.alicdn.com/t/c/font_3704850_10ywstwkwbu.woff2?t=1668494664578') format('woff2'),
-       url('//at.alicdn.com/t/c/font_3704850_10ywstwkwbu.woff?t=1668494664578') format('woff'),
-       url('//at.alicdn.com/t/c/font_3704850_10ywstwkwbu.ttf?t=1668494664578') format('truetype');
+  font-family: "iconfont";
+  /* Project id 3704850 */
+  src: url('//at.alicdn.com/t/c/font_3704850_w9aqu08gn3k.woff2?t=1681700366640') format('woff2'),
+    url('//at.alicdn.com/t/c/font_3704850_w9aqu08gn3k.woff?t=1681700366640') format('woff'),
+    url('//at.alicdn.com/t/c/font_3704850_w9aqu08gn3k.ttf?t=1681700366640') format('truetype');
 }
 
 .iconfont {
@@ -11,10 +12,6 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-.icon-empty:before {
-  content: "\e62a";
 }
 
 .icon-shangyishoushangyige:before {
@@ -31,10 +28,6 @@
 
 .icon-kuaijin:before {
   content: "\e879";
-}
-
-.icon-qingkongziyuan:before {
-  content: "\e604";
 }
 
 .icon-lajitong:before {

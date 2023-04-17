@@ -1,7 +1,7 @@
 <template>
-    <view class="text-md relative h-full">
-        <MusicWave v-if="loading" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" :height="256" :width="48" />
-        <scroll-view v-else id="lyric" scroll-y :scroll-top="scrollH">
+    <view class="text-md relative" :style="{ 'height': scrollHeight + 'px'}">
+        <MusicWave v-if="loading && scrollHeight" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2" :height="256" :width="48" />
+        <scroll-view v-else id="lyric" scroll-y :scroll-top="scrollH" :style="{ 'height': scrollHeight + 'px'}">
             <view v-for="(item, index) in lyricData.lyric" :key="index"
             class="flex justify-center mx-8 text-center py-2 lyric-item"
             :class="lyricIndex === index ? 'text-blue-300 opacity-100 scale-110' : 'opacity-20'"
@@ -19,7 +19,7 @@ import MusicWave from '@/components/MusicWave.vue'
 const { currentTime, id } = toRefs(usePlayerStore())
 const { onSliderChange } = usePlayerStore();
 const props = defineProps<{
-    // scrollHeight: number,
+    scrollHeight: number,
     lyricData: any
 }>()
 // const lyric = ref<any>()    // 歌词标签 dom

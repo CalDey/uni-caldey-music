@@ -8,7 +8,7 @@
                         <i class="iconfont text-2xl ml-2" @click="toggleLoop"
                         :class="loopType === 0 ? 'icon-liebiaoxunhuan' : loopType === 1 ? 'icon-danquxunhuan' : 'icon-suijibofang'"></i>
                         <!-- {{ loopType === 0 ? '列表循环' : loopType === 1 ? '单曲循环' : '随机播放' }} -->
-                        <i class="iconfont icon-empty text-xl ml-2" @click="clearPlayList"></i>
+                        <i class="iconfont icon-lajitong text-2xl ml-2" @click="clearPlayList"></i>
                     </view>
                     <view class="text-sm">{{playList.length}}首</view>
                 </view>

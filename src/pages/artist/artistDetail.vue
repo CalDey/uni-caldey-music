@@ -33,7 +33,7 @@
             <!-- 通过v-show隐藏，而非v-if销毁，防止切换导致歌单列表高度丢失 -->
             <view v-show="selectTab === 'album'">
                 <view v-if="albumList.length <= 0">
-                    <view class="grid grid-cols-2 gap-4 p-4">
+                    <view class="grid grid-cols-2 gap-4 p-2">
                         <!-- skeleton -->
                         <view v-for="item in 2" :key="item">
                             <view class="animate-pulse rounded-t-lg bg-gray-200" style="width:100%;height:44vw;"></view>

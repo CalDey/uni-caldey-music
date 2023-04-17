@@ -18,10 +18,8 @@
                     </view>
                 </view>
             </view>
-            <view v-else>
-                <PlayList :scrollHeight="scrollH" :pageData="pageData" :list="list" :scrollTop="scrollTop"
-                    @scroll="scroll" @onReachBottom="onReachBottom" @gotoPlayListDetailPage="gotoPlayListDetailPage" />
-            </view>
+            <PlayList v-else :scrollHeight="scrollH" :pageData="pageData" :list="list" :scrollTop="scrollTop"
+            @scroll="scroll" @onReachBottom="onReachBottom" @gotoPlayListDetailPage="gotoPlayListDetailPage" />
         </view>
     </view>
     <Player />
